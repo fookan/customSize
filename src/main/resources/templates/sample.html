@@ -15,7 +15,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">With textarea</span>
                 </div>
-                <textarea maxlength="100" class="form-control" aria-label="With textarea" th:field="*{text}"></textarea>
+                <textarea maxlength="10000" class="form-control" aria-label="With textarea" th:field="*{text}"></textarea>
             </div>
             <div>
                 <span class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('text')}" th:errors="*{text}"></span>
@@ -55,8 +55,11 @@
                 const text = $(this).val();
                 const count = countChars(text);
 
-                $('#count').text(`${count} / ${text.length}`);
-
+                if (count > 20) {
+                    $('#count').text('文字数がオーバーしています');
+                } else {
+                    $('#count').text(`${count} / ${text.length}`);    
+                }
                 console.log('*** max length:', $(this).attr('maxlength'));
             });
 
@@ -74,7 +77,7 @@
                             size += 1;
                         }
                         // 改行をいれない文字サイズが20文字をこえたら、そこまでをテキストエリアにいれる
-                        if (size == 21) {
+                        if (size == 20) {
                             break;
                         }
                     }
